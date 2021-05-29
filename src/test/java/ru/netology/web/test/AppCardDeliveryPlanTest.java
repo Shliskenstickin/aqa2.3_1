@@ -5,16 +5,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
 
-
 import java.time.Duration;
-import java.time.LocalDate;
-
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
-import static java.time.format.DateTimeFormatter.ofPattern;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static ru.netology.web.data.DataGenerator.*;
 
 public class AppCardDeliveryPlanTest {

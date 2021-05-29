@@ -1,22 +1,16 @@
 package ru.netology.web.test;
 
-import com.github.javafaker.CreditCardType;
-import com.github.javafaker.Faker;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
 
 import java.time.Duration;
-import java.time.LocalDate;
-import java.util.Locale;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
-import static java.time.format.DateTimeFormatter.ofPattern;
 import static ru.netology.web.data.DataGenerator.*;
-import static ru.netology.web.data.DataGenerator.generateName;
 
 public class AppCardDeliveryReplanTest {
 
