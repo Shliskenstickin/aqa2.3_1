@@ -1,5 +1,6 @@
 package ru.netology.web.test;
 
+import lombok.val;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,7 +11,9 @@ import java.time.Duration;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
-import static ru.netology.web.data.DataGenerator.*;
+import static ru.netology.web.data.DataGenerator.Registration.generateUser;
+import static ru.netology.web.data.DataGenerator.generateDate;
+import static ru.netology.web.data.DataGenerator.generateWrongPhone;
 
 public class AppCardDeliveryPlanTest {
 
@@ -22,10 +25,11 @@ public class AppCardDeliveryPlanTest {
     @Test
     @DisplayName("Should successful plan meeting")
     void ShouldPlan01() {
-        String city = generateCity();
+        val validUser = generateUser("ru");
+        String city = validUser.getCity();
         String date = generateDate(4);
-        String phone = generatePhone("ru");
-        String name = generateName("ru");
+        String phone = validUser.getPhone();
+        String name = validUser.getName();
 
         $("[data-test-id=\"city\"] [class=\"input__control\"]").setValue(city);
         $("[data-test-id=\"date\"] [class=\"input__control\"]").sendKeys(Keys.CONTROL + "A");
@@ -43,10 +47,12 @@ public class AppCardDeliveryPlanTest {
     @Test
     @DisplayName("Should Warning If Invalid City")
     void ShouldPlan02() {
-        String city = generateCity("en");
+        val validUser = generateUser("ru");
+        val invalidUser = generateUser("en");
+        String city = invalidUser.getCity();
         String date = generateDate(4);
-        String phone = generatePhone("ru");
-        String name = generateName("ru");
+        String phone = validUser.getPhone();
+        String name = validUser.getName();
 
         $("[data-test-id=\"city\"] [class=\"input__control\"]").setValue(city);
         $("[data-test-id=\"date\"] [class=\"input__control\"]").sendKeys(Keys.CONTROL + "A");
@@ -63,10 +69,12 @@ public class AppCardDeliveryPlanTest {
     @Test
     @DisplayName("Should warning if invalid name")
     void ShouldPlan03() {
-        String city = generateCity();
+        val validUser = generateUser("ru");
+        val invalidUser = generateUser("en");
+        String city = validUser.getCity();
         String date = generateDate(4);
-        String phone = generatePhone("ru");
-        String name = generateName("en");
+        String phone = validUser.getPhone();
+        String name = invalidUser.getName();
 
         $("[data-test-id=\"city\"] [class=\"input__control\"]").setValue(city);
         $("[data-test-id=\"date\"] [class=\"input__control\"]").sendKeys(Keys.CONTROL + "A");
@@ -83,10 +91,11 @@ public class AppCardDeliveryPlanTest {
     @Test
     @DisplayName("Should warning if phone not valid")
     void ShouldPlan04() {
-        String city = generateCity();
+        val validUser = generateUser("ru");
+        String city = validUser.getCity();
         String date = generateDate(4);
-        String phone = "7777";
-        String name = generateName("ru");
+        String phone = generateWrongPhone(4);
+        String name = validUser.getName();
 
         $("[data-test-id=\"city\"] [class=\"input__control\"]").setValue(city);
         $("[data-test-id=\"date\"] [class=\"input__control\"]").sendKeys(Keys.CONTROL + "A");
@@ -102,11 +111,11 @@ public class AppCardDeliveryPlanTest {
 
     @Test
     @DisplayName("Should warning if phone not enter")
-    void ShouldPlan08() {
-        String city = generateCity();
+    void ShouldPlan05() {
+        val validUser = generateUser("ru");
+        String city = validUser.getCity();
         String date = generateDate(4);
-
-        String name = generateName("ru");
+        String name = validUser.getName();
 
         $("[data-test-id=\"city\"] [class=\"input__control\"]").setValue(city);
         $("[data-test-id=\"date\"] [class=\"input__control\"]").sendKeys(Keys.CONTROL + "A");
@@ -121,11 +130,12 @@ public class AppCardDeliveryPlanTest {
 
     @Test
     @DisplayName("Should Should warning if checkbox off")
-    void ShouldPlan05() {
-        String city = generateCity();
+    void ShouldPlan06() {
+        val validUser = generateUser("ru");
+        String city = validUser.getCity();
         String date = generateDate(4);
-        String phone = generatePhone("ru");
-        String name = generateName("ru");
+        String phone = validUser.getPhone();
+        String name = validUser.getName();
 
         $("[data-test-id=\"city\"] [class=\"input__control\"]").setValue(city);
         $("[data-test-id=\"date\"] [class=\"input__control\"]").sendKeys(Keys.CONTROL + "A");
@@ -139,11 +149,12 @@ public class AppCardDeliveryPlanTest {
 
     @Test
     @DisplayName("Should warning if past date")
-    void ShouldPlan06() {
-        String city = generateCity();
+    void ShouldPlan07() {
+        val validUser = generateUser("ru");
+        String city = validUser.getCity();
         String date = generateDate(-1);
-        String phone = generatePhone("ru");
-        String name = generateName("ru");
+        String phone = validUser.getPhone();
+        String name = validUser.getName();
 
         $("[data-test-id=\"city\"] [class=\"input__control\"]").setValue(city);
         $("[data-test-id=\"date\"] [class=\"input__control\"]").sendKeys(Keys.CONTROL + "A");
@@ -159,11 +170,12 @@ public class AppCardDeliveryPlanTest {
 
     @Test
     @DisplayName("Should warning if plan day to day")
-    void ShouldPlan07() {
-        String city = generateCity();
-        String date = generateDate();
-        String phone = generatePhone("ru");
-        String name = generateName("ru");
+    void ShouldPlan08() {
+        val validUser = generateUser("ru");
+        String city = validUser.getCity();
+        String date = generateDate(0);
+        String phone = validUser.getPhone();
+        String name = validUser.getName();
 
         $("[data-test-id=\"city\"] [class=\"input__control\"]").setValue(city);
         $("[data-test-id=\"date\"] [class=\"input__control\"]").sendKeys(Keys.CONTROL + "A");

@@ -1,6 +1,7 @@
 package ru.netology.web.data;
 
 import com.github.javafaker.Faker;
+import lombok.Value;
 
 import java.time.LocalDate;
 import java.util.Locale;
@@ -30,10 +31,6 @@ public class DataGenerator {
         return faker.address().city();
     }
 
-    public static String generateDate() {
-        return LocalDate.now().format(ofPattern("dd.MM.yyyy"));
-    }
-
     public static String generateDate(long day) {
         if (day > 0) {
             return LocalDate.now().plusDays(day).format(ofPattern("dd.MM.yyyy"));
@@ -41,7 +38,7 @@ public class DataGenerator {
         if (day < 0) {
             return LocalDate.now().minusDays(day).format(ofPattern("dd.MM.yyyy"));
         }
-        return null;
+        return LocalDate.now().format(ofPattern("dd.MM.yyyy"));
     }
 
     public static String generateName(String locale) {
@@ -52,5 +49,32 @@ public class DataGenerator {
     public static String generatePhone(String locale) {
         Faker faker = new Faker(new Locale(locale));
         return faker.phoneNumber().phoneNumber();
+    }
+
+    public static String generateWrongPhone(int length) {
+        Random r = new Random();
+        String result = null;
+        for (int i = 0; i < length; i++) {
+            String num = Integer.toString(r.nextInt(10));
+            result += num;
+        }
+        return result;
+    }
+
+    public static class Registration {
+
+        public static UserInfo generateUser(String locale) {
+            if (locale.equals("ru")) {
+                return new UserInfo(generateCity(), generateName(locale), generatePhone(locale));
+            }
+            return new UserInfo(generateCity(locale), generateName(locale), generatePhone(locale));
+        }
+    }
+
+    @Value
+    public static class UserInfo {
+        String city;
+        String name;
+        String phone;
     }
 }
